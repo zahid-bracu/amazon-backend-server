@@ -31,7 +31,7 @@ router.get('/orderProducts', async (req, res, next) => {
 })
 
 
-//adding products by admin
+//adding single products by admin
   router.post('/addProducts',middleware,async (req, res, next) => {
     console.log(req.body);
     var {category,img,key,name,price,seller,stock}=   req.body;
@@ -54,6 +54,43 @@ router.get('/orderProducts', async (req, res, next) => {
         } 
       }
   })
+
+
+//post chunk of data
+router.post('/chunkProducts', async (req,res)=>{
+    try{
+        var tempArray=[];
+        req.body.map(iterator=>{
+            const datas=new productList({
+                category:iterator.category,
+                img:iterator.img,
+                key:iterator.key,
+                name:iterator.name,
+                price:iterator.price,
+                seller:iterator.seller,
+                stock:iterator.stock
+            })
+            tempArray.push(datas);
+        })
+        const result= await productList.insertMany(tempArray);
+        res.status(200).send(result);
+    }catch(err){
+        res.status(400).send({"message":err})
+    }
+})
+
+
+// delete all product from the product list
+router.delete('/deleteAllProducts', async (req,res)=>{
+    try{
+        var result= await productList.deleteMany({});
+        res.send(result)
+    }catch(err){
+        res.status(200).send({'message':err})
+    }
+})
+
+ 
 
 
 // order products by user / client
