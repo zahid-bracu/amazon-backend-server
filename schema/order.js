@@ -33,7 +33,11 @@ const orderSchema=new mongoose.Schema({
         required:true
     },
     savedCart:{
-        type:Array,
+        type:Object,
+        required:true
+    },
+    time:{
+        type:String,
         required:true
     }
 })
