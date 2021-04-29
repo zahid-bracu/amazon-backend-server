@@ -40,6 +40,18 @@ router.get('/', async (req, res, next) => {
 
 
 
+  //get all product
+  router.get('/allOrders', async (req, res, next) => {
+    try{
+        const existed=await orderList.find();
+        res.status(200).json(existed)
+    }catch(err){
+        res.status(202).json({message:err})
+    }
+    
+})
+
+
 // get individual order
 router.get('/orderProducts', async (req, res, next) => {
     const {mail}=req.body;
