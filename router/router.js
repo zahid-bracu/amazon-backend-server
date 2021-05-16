@@ -127,6 +127,36 @@ router.delete('/deleteAllProducts', async (req,res)=>{
     }
 })
 
+
+
+
+// delete one order
+router.delete('/deleteOrder', async (req,res)=>{
+    console.log(req.body.id);
+    try{
+        var result= await orderList.findByIdAndDelete({_id:req.body.id});
+        res.send(result)
+    }catch(err){
+        res.status(200).send({'message':err})
+    }
+    // res.status(302).json({"Message":"Found"})
+})
+
+
+
+// get individual order
+router.get('/detailOrder/:id', async (req,res)=>{
+    console.log(req.params);
+    console.log(req.body.id);
+    try{
+         var result= await orderList.findById({_id:req.params.id});
+         res.send(result)
+     }catch(err){
+         res.status(200).send({'message':err})
+     }
+    
+})
+
  
 
 
