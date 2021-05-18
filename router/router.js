@@ -157,10 +157,26 @@ router.get('/detailOrder/:id', async (req,res)=>{
     
 })
 
+
+// get individual order by email for user/customer
+router.get('/order/:email', async (req,res)=>{
+    console.log(req.params);
+    // console.log(req.body.id);
+    const mail=req.params.email;
+    console.log(mail);
+    try{
+         var result= await orderList.find({mail:mail});
+         res.send(result)
+     }catch(err){
+         res.status(200).send({'message':err})
+     }
+    
+})
+
  
 
 
-// order products by user / client
+// post order products by user / client
 router.post('/orderProducts', async (req, res) => {
     var time= getTimes();
     console.log(time)
